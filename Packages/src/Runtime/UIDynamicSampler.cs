@@ -15,11 +15,36 @@ namespace Coffee.UIExtensions
     [Icon("Packages/com.coffee.ui-dynamic-sampler/UIDynamicSamplerIcon.png")]
     public class UIDynamicSampler : UIBehaviour, IMaterialModifier
     {
+        public enum PreDownSamplingRate
+        {
+            None = 0,
+            x2 = 2,
+            x4 = 4,
+            x8 = 8,
+            x16 = 16,
+            x32 = 32,
+        }
+
+        /// <summary>
+        /// Dynamic sampling will occur when the number of texels per screen pixel exceeds this value.
+        /// </summary>
+        [Tooltip("Dynamic sampling will occur when the number of texels per screen pixel exceeds this value.")]
         [Range(0.5f, 10f)]
         [SerializeField] private float m_SamplingThreshold = 2f;
 
+        /// <summary>
+        /// The scale of the dynamic texture relative to the rendering size. A larger value will require more memory.
+        /// </summary>
+        [Tooltip(
+            "The scale of the dynamic texture relative to the rendering size. A larger value will require more memory.")]
         [Range(0.5f, 10f)]
         [SerializeField] private float m_ScaleFactor = 1.5f;
+
+        /// <summary>
+        /// The intensity of the blur applied by the downsampling buffer beforehand.
+        /// </summary>
+        [Tooltip("The intensity of the blur applied by the downsampling buffer beforehand.")]
+        [SerializeField] private PreDownSamplingRate m_PreDownSamplingRate = PreDownSamplingRate.None;
 
         private RenderTexture _dynamicTexture;
         private Canvas.WillRenderCanvases _blit;
@@ -122,9 +147,20 @@ namespace Coffee.UIExtensions
             }
 #endif
 
+            var texId = (uint)tex.GetInstanceID();
+            RenderTexture tmp = null;
+            if (m_PreDownSamplingRate != PreDownSamplingRate.None)
+            {
+                var rate = (int)m_PreDownSamplingRate;
+                var preDownSamplingSize = new Vector2Int(tex.width / rate, tex.height / rate);
+                tmp = RenderTexture.GetTemporary(RenderTextureRepository.GetDescriptor(preDownSamplingSize, false));
+                Graphics.Blit(tex, tmp);
+                tex = tmp;
+            }
+
             // Get or create render texture.
             var size = Vector2Int.RoundToInt(rtSize * canvasScale * m_ScaleFactor * renderScale);
-            var hash = new Hash128((uint)tex.GetInstanceID(), (uint)size.GetHashCode(), 0, 0);
+            var hash = new Hash128(texId, (uint)size.GetHashCode(), (uint)m_PreDownSamplingRate, 0);
             if (!RenderTextureRepository.Valid(hash, _dynamicTexture))
             {
                 RenderTextureRepository.Get(hash, ref _dynamicTexture,
@@ -138,6 +174,11 @@ namespace Coffee.UIExtensions
             }
 
             graphic.canvasRenderer.SetTexture(_dynamicTexture);
+
+            if (tmp)
+            {
+                RenderTexture.ReleaseTemporary(tmp);
+            }
         }
     }
 

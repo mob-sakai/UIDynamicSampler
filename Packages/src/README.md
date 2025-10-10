@@ -143,6 +143,16 @@ _This package requires **Unity 2020.3 or later**._
 
 <br><br>
 
+### Component: UIDynamicSampler
+
+![](.vscode/1760085031559.png)
+
+- **Sampling Threshold**: Dynamic sampling will occur when the number of texels per screen pixel exceeds this value.
+- **Scale Factor**: The scale of the dynamic texture relative to the rendering size. A larger value will require more memory.
+- **Pre Down Sampling Rate**: The intensity of the blur applied by the downsampling buffer beforehand.
+
+<br><br>
+
 ## 🤝 Contributing
 
 ### Issues
