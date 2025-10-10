@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/mob-sakai/UIDynamicSampler/compare/1.0.0...1.1.0) (2025-10-10)
+
+
+### Features
+
+* add `PreDownSamplingRate` option ([80e0370](https://github.com/mob-sakai/UIDynamicSampler/commit/80e0370f7dac5fe9e2131f2c5d4030a9406f2fa8))
+
 # 1.0.0 (2025-03-10)
 
 
