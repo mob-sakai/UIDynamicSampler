@@ -145,7 +145,7 @@ _This package requires **Unity 2020.3 or later**._
 
 ### Component: UIDynamicSampler
 
-![](.vscode/1760085031559.png)
+![](https://github.com/mob-sakai/mob-sakai/releases/download/docs/1760243024107.png)
 
 - **Sampling Threshold**: Dynamic sampling will occur when the number of texels per screen pixel exceeds this value.
 - **Scale Factor**: The scale of the dynamic texture relative to the rendering size. A larger value will require more memory.
