@@ -147,7 +147,7 @@ namespace Coffee.UIExtensions
             }
 #endif
 
-            var texId = (uint)tex.GetInstanceID();
+            var texId = (uint)tex.GetHashCode();
             RenderTexture tmp = null;
             if (m_PreDownSamplingRate != PreDownSamplingRate.None)
             {
