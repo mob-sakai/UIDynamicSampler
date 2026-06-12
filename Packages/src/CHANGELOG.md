@@ -1,3 +1,10 @@
+## [1.1.1](https://github.com/mob-sakai/UIDynamicSampler/compare/1.1.0...1.1.1) (2026-06-12)
+
+
+### Bug Fixes
+
+* support Unity 6.5 ([7726ea3](https://github.com/mob-sakai/UIDynamicSampler/commit/7726ea3f502372ded6b32e0809a0823769bf3819))
+
 # [1.1.0](https://github.com/mob-sakai/UIDynamicSampler/compare/1.0.0...1.1.0) (2025-10-10)
 
 
